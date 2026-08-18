@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新华尊瑞&蜀新伴知识答题</title>
     <style>
         * {
@@ -10,7 +10,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -22,7 +21,7 @@
             padding: 20px;
         }
 
-        /* 模拟手机容器（电脑端显示） */
+        /* 模拟手机容器 */
         .app-container {
             width: 100%;
             max-width: 375px;
@@ -48,165 +47,14 @@
             display: flex;
         }
 
-        /* ========== 登录注册页样式 ========== */
-        #login-page {
-            background: linear-gradient(180deg, #0052D9 0%, #003399 100%);
-            color: #fff;
-            justify-content: center;
-            padding: 0 32px;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .login-header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .login-header p {
-            font-size: 14px;
-            opacity: 0.85;
-        }
-
-        .tab-group {
-            display: flex;
-            margin-bottom: 32px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50px;
-            padding: 4px;
-        }
-
-        .tab-item {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .tab-item.active {
-            background: #fff;
-            color: #0052D9;
-            font-weight: 600;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 14px 16px;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            background: rgba(255,255,255,0.15);
-            color: #fff;
-            outline: none;
-        }
-
-        .form-input::placeholder {
-            color: rgba(255,255,255,0.6);
-        }
-
-        .code-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .code-group .form-input {
-            flex: 1;
-        }
-
-        .send-code-btn {
-            width: 110px;
-            border: none;
-            border-radius: 10px;
-            background: #FFB800;
-            color: #003399;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .send-code-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 10px;
-            background: #FFB800;
-            color: #003399;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        .login-tip {
-            text-align: center;
-            font-size: 12px;
-            opacity: 0.7;
-            margin-top: 20px;
-            line-height: 1.6;
-        }
-
-        .toast {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.75);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            z-index: 999;
-            display: none;
-        }
-
         /* ========== 首页样式 ========== */
         #home-page {
             background: linear-gradient(180deg, #0052D9 0%, #003399 100%);
             color: #fff;
         }
 
-        .home-topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px 10px;
-            font-size: 13px;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
         .home-header {
-            padding: 10px 24px 20px;
+            padding: 40px 24px 20px;
             text-align: center;
         }
 
@@ -268,7 +116,6 @@
             padding: 16px;
             flex: 1;
             overflow-y: auto;
-            margin-bottom: 20px;
         }
 
         .rules-box h4 {
@@ -360,8 +207,8 @@
             color: #333;
         }
 
-        .option-item:active {
-            transform: scale(0.99);
+        .option-item:hover {
+            border-color: #0052D9;
         }
 
         .option-item.correct {
@@ -518,96 +365,12 @@
             font-weight: 600;
             cursor: pointer;
         }
-
-        /* ========== 移动端全屏适配 ========== */
-        @media screen and (max-width: 480px) {
-            body {
-                padding: 0;
-                background: #fff;
-            }
-
-            .app-container {
-                max-width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                box-shadow: none;
-            }
-
-            .home-topbar {
-                padding-top: calc(20px + env(safe-area-inset-top));
-            }
-
-            .quiz-header {
-                padding-top: calc(20px + env(safe-area-inset-top));
-            }
-
-            .result-header {
-                padding-top: calc(50px + env(safe-area-inset-top));
-            }
-
-            .result-btns {
-                padding-bottom: calc(20px + env(safe-area-inset-bottom));
-            }
-
-            .login-header {
-                margin-top: calc(env(safe-area-inset-top) + 20px);
-            }
-        }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- 登录注册页 -->
-        <div id="login-page" class="page active">
-            <div class="login-header">
-                <h1>新华尊瑞&蜀新伴</h1>
-                <p>权益知识答题平台</p>
-            </div>
-
-            <div class="tab-group">
-                <div class="tab-item active" data-tab="login" onclick="switchTab('login')">登录</div>
-                <div class="tab-item" data-tab="register" onclick="switchTab('register')">注册</div>
-            </div>
-
-            <!-- 登录表单 -->
-            <div id="login-form">
-                <div class="form-group">
-                    <input type="tel" class="form-input" id="login-phone" placeholder="请输入手机号" maxlength="11">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" id="login-pwd" placeholder="请输入密码">
-                </div>
-                <button class="submit-btn" onclick="handleLogin()">登录</button>
-            </div>
-
-            <!-- 注册表单 -->
-            <div id="register-form" style="display:none;">
-                <div class="form-group">
-                    <input type="tel" class="form-input" id="reg-phone" placeholder="请输入手机号" maxlength="11">
-                </div>
-                <div class="form-group code-group">
-                    <input type="text" class="form-input" id="reg-code" placeholder="请输入验证码" maxlength="6">
-                    <button class="send-code-btn" id="sendCodeBtn" onclick="sendCode()">获取验证码</button>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" id="reg-pwd" placeholder="请设置密码（6-16位）">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" id="reg-pwd2" placeholder="请确认密码">
-                </div>
-                <button class="submit-btn" onclick="handleRegister()">注册并登录</button>
-            </div>
-
-            <p class="login-tip">注册即表示同意《用户服务协议》和《隐私政策》<br>Demo版数据存储于本地浏览器</p>
-        </div>
-
         <!-- 首页 -->
-        <div id="home-page" class="page">
-            <div class="home-topbar">
-                <span id="user-phone">欢迎您</span>
-                <button class="logout-btn" onclick="handleLogout()">退出登录</button>
-            </div>
-
+        <div id="home-page" class="page active">
             <div class="home-header">
                 <h1 class="home-title">新华尊瑞&蜀新伴</h1>
                 <p class="home-subtitle">权益知识答题挑战</p>
@@ -615,15 +378,15 @@
             
             <div class="score-card">
                 <div class="score-item">
-                    <h3 id="total-score">0</h3>
+                    <h3>0</h3>
                     <p>累计积分</p>
                 </div>
                 <div class="score-item">
-                    <h3 id="best-score">0</h3>
+                    <h3>0</h3>
                     <p>最高记录</p>
                 </div>
                 <div class="score-item">
-                    <h3 id="pass-count">0</h3>
+                    <h3>0</h3>
                     <p>通关次数</p>
                 </div>
             </div>
@@ -649,7 +412,7 @@
                 </div>
                 <div class="quiz-info">
                     <span id="questionIndex">第 1 / 10 题</span>
-                    <span class="timer" id="timer">30s</span>
+                    <span class="timer" id="timer">15s</span>
                 </div>
             </div>
 
@@ -697,153 +460,8 @@
         </div>
     </div>
 
-    <!-- 提示弹窗 -->
-    <div class="toast" id="toast"></div>
-
     <script>
-        // ==================== 账户注册登录逻辑 ====================
-        let currentTab = 'login';
-        let codeTimer = null;
-        let codeCountdown = 60;
-
-        // 页面初始化：检查登录状态
-        window.onload = function() {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                showPage('home-page');
-                updateUserInfo();
-            }
-        };
-
-        // 切换登录/注册tab
-        function switchTab(tab) {
-            currentTab = tab;
-            document.querySelectorAll('.tab-item').forEach(item => {
-                item.classList.toggle('active', item.dataset.tab === tab);
-            });
-            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
-            document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
-        }
-
-        // 提示框
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 2000);
-        }
-
-        // 校验手机号格式
-        function validPhone(phone) {
-            return /^1[3-9]\d{9}$/.test(phone);
-        }
-
-        // 发送验证码（模拟）
-        function sendCode() {
-            const phone = document.getElementById('reg-phone').value.trim();
-            if (!validPhone(phone)) {
-                showToast('请输入正确的手机号');
-                return;
-            }
-
-            const btn = document.getElementById('sendCodeBtn');
-            btn.disabled = true;
-            showToast('验证码已发送（Demo：666666）');
-
-            // 倒计时
-            codeCountdown = 60;
-            btn.textContent = codeCountdown + 's后重发';
-            codeTimer = setInterval(() => {
-                codeCountdown--;
-                btn.textContent = codeCountdown + 's后重发';
-                if (codeCountdown <= 0) {
-                    clearInterval(codeTimer);
-                    btn.disabled = false;
-                    btn.textContent = '获取验证码';
-                }
-            }, 1000);
-        }
-
-        // 注册逻辑
-        function handleRegister() {
-            const phone = document.getElementById('reg-phone').value.trim();
-            const code = document.getElementById('reg-code').value.trim();
-            const pwd = document.getElementById('reg-pwd').value.trim();
-            const pwd2 = document.getElementById('reg-pwd2').value.trim();
-
-            if (!validPhone(phone)) return showToast('请输入正确的手机号');
-            if (code !== '666666') return showToast('验证码错误（Demo：666666）');
-            if (pwd.length < 6 || pwd.length > 16) return showToast('密码需6-16位');
-            if (pwd !== pwd2) return showToast('两次密码不一致');
-
-            // 检查账号是否已存在
-            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
-            if (userList[phone]) return showToast('该手机号已注册');
-
-            // 保存账号
-            userList[phone] = {
-                password: pwd,
-                totalScore: 0,
-                bestScore: 0,
-                passCount: 0,
-                registerTime: new Date().getTime()
-            };
-            localStorage.setItem('userList', JSON.stringify(userList));
-            localStorage.setItem('currentUser', phone);
-
-            showToast('注册成功');
-            setTimeout(() => {
-                showPage('home-page');
-                updateUserInfo();
-            }, 800);
-        }
-
-        // 登录逻辑
-        function handleLogin() {
-            const phone = document.getElementById('login-phone').value.trim();
-            const pwd = document.getElementById('login-pwd').value.trim();
-
-            if (!validPhone(phone)) return showToast('请输入正确的手机号');
-
-            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
-            if (!userList[phone]) return showToast('账号不存在，请先注册');
-            if (userList[phone].password !== pwd) return showToast('密码错误');
-
-            localStorage.setItem('currentUser', phone);
-            showToast('登录成功');
-            setTimeout(() => {
-                showPage('home-page');
-                updateUserInfo();
-            }, 800);
-        }
-
-        // 退出登录
-        function handleLogout() {
-            localStorage.removeItem('currentUser');
-            showPage('login-page');
-            // 清空表单
-            document.getElementById('login-phone').value = '';
-            document.getElementById('login-pwd').value = '';
-            switchTab('login');
-        }
-
-        // 更新首页用户信息与成绩
-        function updateUserInfo() {
-            const phone = localStorage.getItem('currentUser');
-            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
-            const user = userList[phone];
-
-            if (user) {
-                document.getElementById('user-phone').textContent = '您好，' + phone.slice(0, 3) + '****' + phone.slice(7);
-                document.getElementById('total-score').textContent = user.totalScore;
-                document.getElementById('best-score').textContent = user.bestScore;
-                document.getElementById('pass-count').textContent = user.passCount;
-            }
-        }
-
-        // ==================== 答题核心逻辑 ====================
+        // 题库（基于官方百问百答整理）
         const questionBank = [
             {
                 question: "新华尊钻级客户认定中，累计保费需达到多少以上？",
@@ -913,7 +531,7 @@
         let correctCount = 0;
         let wrongList = [];
         let timer = null;
-        let timeLeft = 30;
+        let timeLeft = 15;
         let startTime = 0;
 
         // 随机抽取题目
@@ -926,6 +544,19 @@
             return newArray;
         }
 
+        // 开始答题
+        function startQuiz() {
+            currentQuestions = shuffleArray(questionBank).slice(0, 10);
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongList = [];
+            startTime = Date.now();
+            
+            showPage('quiz-page');
+            renderQuestion();
+        }
+
         // 切换页面
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
@@ -934,11 +565,134 @@
             document.getElementById(pageId).classList.add('active');
         }
 
-        // 开始答题
-        function startQuiz() {
-            currentQuestions = shuffleArray(questionBank).slice(0, 10);
-            currentIndex = 0;
-            score = 0;
-            correctCount = 0;
-            wrongList = [];
-            startTime = Date.now
+        // 渲染题目
+        function renderQuestion() {
+            const q = currentQuestions[currentIndex];
+            document.getElementById('questionIndex').textContent = `第 ${currentIndex + 1} / 10 题`;
+            document.getElementById('questionTitle').textContent = q.question;
+            
+            const progress = ((currentIndex) / 10) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            const optionsHtml = q.options.map((opt, idx) => 
+                `<div class="option-item" onclick="selectOption(${idx})">${String.fromCharCode(65 + idx)}. ${opt}</div>`
+            ).join('');
+            document.getElementById('optionsList').innerHTML = optionsHtml;
+            
+            document.getElementById('feedbackBox').classList.remove('show');
+            
+            // 启动倒计时
+            timeLeft = 15;
+            updateTimer();
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timeUp();
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            document.getElementById('timer').textContent = timeLeft + 's';
+            if (timeLeft <= 5) {
+                document.getElementById('timer').style.color = '#FF4D4F';
+            } else {
+                document.getElementById('timer').style.color = '#FF4D4F';
+            }
+        }
+
+        // 选择选项
+        function selectOption(idx) {
+            clearInterval(timer);
+            const q = currentQuestions[currentIndex];
+            const options = document.querySelectorAll('.option-item');
+            
+            options.forEach(opt => opt.classList.add('disabled'));
+            
+            if (idx === q.answer) {
+                options[idx].classList.add('correct');
+                score += 10;
+                correctCount++;
+            } else {
+                options[idx].classList.add('wrong');
+                options[q.answer].classList.add('correct');
+                wrongList.push({
+                    question: q.question,
+                    wrong: q.options[idx],
+                    right: q.options[q.answer]
+                });
+            }
+            
+            // 显示解析
+            document.getElementById('feedbackContent').textContent = q.analysis;
+            document.getElementById('feedbackBox').classList.add('show');
+            
+            // 1.5秒后下一题
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
+        }
+
+        // 超时处理
+        function timeUp() {
+            const q = currentQuestions[currentIndex];
+            const options = document.querySelectorAll('.option-item');
+            options.forEach(opt => opt.classList.add('disabled'));
+            options[q.answer].classList.add('correct');
+            
+            wrongList.push({
+                question: q.question,
+                wrong: '超时未答',
+                right: q.options[q.answer]
+            });
+            
+            document.getElementById('feedbackContent').textContent = q.analysis;
+            document.getElementById('feedbackBox').classList.add('show');
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex >= 10) {
+                showResult();
+            } else {
+                renderQuestion();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            const usedTime = Math.floor((Date.now() - startTime) / 1000);
+            
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('accuracy').textContent = (correctCount * 10) + '%';
+            document.getElementById('timeUsed').textContent = usedTime + 's';
+            
+            const wrongHtml = wrongList.length === 0 
+                ? '<p style="color:#52C41A; text-align:center; padding:20px;">🎉 全部答对，太棒了！</p>'
+                : wrongList.map(item => `
+                    <div class="wrong-item">
+                        <div class="wrong-q">${item.question}</div>
+                        <div class="wrong-a">你的答案：${item.wrong}</div>
+                        <div class="right-a">正确答案：${item.right}</div>
+                    </div>
+                `).join('');
+            document.getElementById('wrongList').innerHTML = wrongHtml;
+            
+            showPage('result-page');
+        }
+
+        function goHome() {
+            showPage('home-page');
+        }
+    </script>
+</body>
+</html>
