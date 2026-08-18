@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>新华尊瑞&蜀新伴知识答题</title>
     <style>
         * {
@@ -10,6 +10,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -21,7 +22,6 @@
             padding: 20px;
         }
 
-        /* 模拟手机容器 */
         .app-container {
             width: 100%;
             max-width: 375px;
@@ -47,14 +47,165 @@
             display: flex;
         }
 
-        /* ========== 首页样式 ========== */
+        /* 登录注册页 */
+        #login-page {
+            background: linear-gradient(180deg, #0052D9 0%, #003399 100%);
+            color: #fff;
+            justify-content: center;
+            padding: 0 32px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .tab-group {
+            display: flex;
+            margin-bottom: 32px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 4px;
+        }
+
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-item.active {
+            background: #fff;
+            color: #0052D9;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .code-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-group .form-input {
+            flex: 1;
+        }
+
+        .send-code-btn {
+            width: 110px;
+            border: none;
+            border-radius: 10px;
+            background: #FFB800;
+            color: #003399;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .send-code-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            background: #FFB800;
+            color: #003399;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .login-tip {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 999;
+            display: none;
+        }
+
+        /* 首页 */
         #home-page {
             background: linear-gradient(180deg, #0052D9 0%, #003399 100%);
             color: #fff;
         }
 
+        .home-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px 10px;
+            font-size: 13px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
         .home-header {
-            padding: 40px 24px 20px;
+            padding: 10px 24px 20px;
             text-align: center;
         }
 
@@ -116,6 +267,7 @@
             padding: 16px;
             flex: 1;
             overflow-y: auto;
+            margin-bottom: 20px;
         }
 
         .rules-box h4 {
@@ -136,7 +288,7 @@
             font-weight: bold;
         }
 
-        /* ========== 答题页样式 ========== */
+        /* 答题页 */
         #quiz-page {
             background: #f7f8fa;
         }
@@ -207,8 +359,8 @@
             color: #333;
         }
 
-        .option-item:hover {
-            border-color: #0052D9;
+        .option-item:active {
+            transform: scale(0.99);
         }
 
         .option-item.correct {
@@ -252,7 +404,7 @@
             color: #666;
         }
 
-        /* ========== 结算页样式 ========== */
+        /* 结算页 */
         #result-page {
             background: #f7f8fa;
         }
@@ -365,12 +517,94 @@
             font-weight: 600;
             cursor: pointer;
         }
+
+        /* 移动端全屏适配 */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 0;
+                background: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .home-topbar {
+                padding-top: calc(20px + env(safe-area-inset-top));
+            }
+
+            .quiz-header {
+                padding-top: calc(20px + env(safe-area-inset-top));
+            }
+
+            .result-header {
+                padding-top: calc(50px + env(safe-area-inset-top));
+            }
+
+            .result-btns {
+                padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            }
+
+            .login-header {
+                margin-top: calc(env(safe-area-inset-top) + 20px);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <!-- 登录注册页 -->
+        <div id="login-page" class="page active">
+            <div class="login-header">
+                <h1>新华尊瑞&蜀新伴</h1>
+                <p>权益知识答题平台</p>
+            </div>
+
+            <div class="tab-group">
+                <div class="tab-item active" data-tab="login" onclick="switchTab('login')">登录</div>
+                <div class="tab-item" data-tab="register" onclick="switchTab('register')">注册</div>
+            </div>
+
+            <div id="login-form">
+                <div class="form-group">
+                    <input type="tel" class="form-input" id="login-phone" placeholder="请输入手机号" maxlength="11">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="login-pwd" placeholder="请输入密码">
+                </div>
+                <button class="submit-btn" onclick="handleLogin()">登录</button>
+            </div>
+
+            <div id="register-form" style="display:none;">
+                <div class="form-group">
+                    <input type="tel" class="form-input" id="reg-phone" placeholder="请输入手机号" maxlength="11">
+                </div>
+                <div class="form-group code-group">
+                    <input type="text" class="form-input" id="reg-code" placeholder="请输入验证码" maxlength="6">
+                    <button class="send-code-btn" id="sendCodeBtn" onclick="sendCode()">获取验证码</button>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="reg-pwd" placeholder="请设置密码（6-16位）">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="reg-pwd2" placeholder="请确认密码">
+                </div>
+                <button class="submit-btn" onclick="handleRegister()">注册并登录</button>
+            </div>
+
+            <p class="login-tip">注册即表示同意《用户服务协议》和《隐私政策》<br>Demo版数据存储于本地浏览器</p>
+        </div>
+
         <!-- 首页 -->
-        <div id="home-page" class="page active">
+        <div id="home-page" class="page">
+            <div class="home-topbar">
+                <span id="user-phone">欢迎您</span>
+                <button class="logout-btn" onclick="handleLogout()">退出登录</button>
+            </div>
+
             <div class="home-header">
                 <h1 class="home-title">新华尊瑞&蜀新伴</h1>
                 <p class="home-subtitle">权益知识答题挑战</p>
@@ -378,15 +612,15 @@
             
             <div class="score-card">
                 <div class="score-item">
-                    <h3>0</h3>
+                    <h3 id="total-score">0</h3>
                     <p>累计积分</p>
                 </div>
                 <div class="score-item">
-                    <h3>0</h3>
+                    <h3 id="best-score">0</h3>
                     <p>最高记录</p>
                 </div>
                 <div class="score-item">
-                    <h3>0</h3>
+                    <h3 id="pass-count">0</h3>
                     <p>通关次数</p>
                 </div>
             </div>
@@ -398,7 +632,7 @@
                 <ul>
                     <li>共10道题，每题限时30秒</li>
                     <li>答对一题得10分，答错不扣分</li>
-                    <li>题目覆盖新华尊、新华瑞、蜀新伴等权益知识</li>
+                    <li>题库覆盖五大模块65+知识点</li>
                     <li>答题结束可查看错题解析</li>
                 </ul>
             </div>
@@ -412,7 +646,7 @@
                 </div>
                 <div class="quiz-info">
                     <span id="questionIndex">第 1 / 10 题</span>
-                    <span class="timer" id="timer">15s</span>
+                    <span class="timer" id="timer">30s</span>
                 </div>
             </div>
 
@@ -460,14 +694,210 @@
         </div>
     </div>
 
+    <div class="toast" id="toast"></div>
+
     <script>
-        // 题库（基于官方百问百答整理）
+        // ==================== 账户体系逻辑 ====================
+        let currentTab = 'login';
+        let codeTimer = null;
+        let codeCountdown = 60;
+
+        window.onload = function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                showPage('home-page');
+                updateUserInfo();
+            }
+        };
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.tab === tab);
+            });
+            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+
+        function validPhone(phone) {
+            return /^1[3-9]\d{9}$/.test(phone);
+        }
+
+        function sendCode() {
+            const phone = document.getElementById('reg-phone').value.trim();
+            if (!validPhone(phone)) {
+                showToast('请输入正确的手机号');
+                return;
+            }
+            const btn = document.getElementById('sendCodeBtn');
+            btn.disabled = true;
+            showToast('验证码已发送（Demo：666666）');
+            codeCountdown = 60;
+            btn.textContent = codeCountdown + 's后重发';
+            codeTimer = setInterval(() => {
+                codeCountdown--;
+                btn.textContent = codeCountdown + 's后重发';
+                if (codeCountdown <= 0) {
+                    clearInterval(codeTimer);
+                    btn.disabled = false;
+                    btn.textContent = '获取验证码';
+                }
+            }, 1000);
+        }
+
+        function handleRegister() {
+            const phone = document.getElementById('reg-phone').value.trim();
+            const code = document.getElementById('reg-code').value.trim();
+            const pwd = document.getElementById('reg-pwd').value.trim();
+            const pwd2 = document.getElementById('reg-pwd2').value.trim();
+
+            if (!validPhone(phone)) return showToast('请输入正确的手机号');
+            if (code !== '666666') return showToast('验证码错误（Demo：666666）');
+            if (pwd.length < 6 || pwd.length > 16) return showToast('密码需6-16位');
+            if (pwd !== pwd2) return showToast('两次密码不一致');
+
+            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
+            if (userList[phone]) return showToast('该手机号已注册');
+
+            userList[phone] = {
+                password: pwd,
+                totalScore: 0,
+                bestScore: 0,
+                passCount: 0,
+                registerTime: new Date().getTime()
+            };
+            localStorage.setItem('userList', JSON.stringify(userList));
+            localStorage.setItem('currentUser', phone);
+
+            showToast('注册成功');
+            setTimeout(() => {
+                showPage('home-page');
+                updateUserInfo();
+            }, 800);
+        }
+
+        function handleLogin() {
+            const phone = document.getElementById('login-phone').value.trim();
+            const pwd = document.getElementById('login-pwd').value.trim();
+
+            if (!validPhone(phone)) return showToast('请输入正确的手机号');
+
+            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
+            if (!userList[phone]) return showToast('账号不存在，请先注册');
+            if (userList[phone].password !== pwd) return showToast('密码错误');
+
+            localStorage.setItem('currentUser', phone);
+            showToast('登录成功');
+            setTimeout(() => {
+                showPage('home-page');
+                updateUserInfo();
+            }, 800);
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('currentUser');
+            showPage('login-page');
+            document.getElementById('login-phone').value = '';
+            document.getElementById('login-pwd').value = '';
+            switchTab('login');
+        }
+
+        function updateUserInfo() {
+            const phone = localStorage.getItem('currentUser');
+            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
+            const user = userList[phone];
+
+            if (user) {
+                document.getElementById('user-phone').textContent = '您好，' + phone.slice(0, 3) + '****' + phone.slice(7);
+                document.getElementById('total-score').textContent = user.totalScore;
+                document.getElementById('best-score').textContent = user.bestScore;
+                document.getElementById('pass-count').textContent = user.passCount;
+            }
+        }
+
+        // ==================== 完整题库（65道，基于官方百问百答） ====================
         const questionBank = [
+            // ===== 新华尊模块 =====
             {
                 question: "新华尊钻级客户认定中，累计保费需达到多少以上？",
                 options: ["100万", "300万", "500万", "1000万"],
                 answer: 2,
                 analysis: "投保人在公司各渠道持有非终止长险个人保单累计实交保费之和，累计保费500万以上可认定为钻级客户。"
+            },
+            {
+                question: "万能险追加的保费是否纳入新华尊保费计算？",
+                options: ["纳入", "不纳入", "仅部分纳入", "视产品而定"],
+                answer: 0,
+                analysis: "万能险追加的保费纳入新华尊保费计算。"
+            },
+            {
+                question: "以下哪种终止保单的保费纳入新华尊保费计算？",
+                options: ["满期终止保单", "理赔终止保单", "失效终止保单", "以上均不纳入"],
+                answer: 3,
+                analysis: "满期终止保单、理赔终止保单、失效终止保单的保费均不纳入新华尊保费计算。"
+            },
+            {
+                question: "26版新华尊客户升级规则是？",
+                options: ["月度升级，年度可升可降", "实时升级，年度内只升不降", "年度统一升级", "季度统一升级"],
+                answer: 1,
+                analysis: "26版新华尊客户在体系内实时升级，年度内只升不降。"
+            },
+            {
+                question: "新华尊存量客户何时可以查看自己的权益内容？",
+                options: ["2026年1月1日", "2026年1月16日", "2026年2月1日", "保单生效日"],
+                answer: 1,
+                analysis: "存量客户于2026年1月16日即可在新华尊小程序查看个人名下的所属权益。"
+            },
+            {
+                question: "新华尊新定级客户何时可查看权益？",
+                options: ["保单生效当日", "过犹豫期后的T+3天", "回执签收当日", "次月1日"],
+                answer: 1,
+                analysis: "新定级客户于过犹豫期后的T+3天（保单回执签收日后T+3日）通过新华尊小程序注册后可查看权益。"
+            },
+            {
+                question: "26版新华尊权益共享人可设置几人？",
+                options: ["1人", "2人", "3人", "5人"],
+                answer: 1,
+                analysis: "26版新华尊权益共享人可设置两人，一经确认，当年不可更改。"
+            },
+            {
+                question: "新华尊权益共享人设置路径是？",
+                options: ["新华尊小程序-我的-权益使用人信息", "官微保单服务", "新时代APP", "客服热线"],
+                answer: 0,
+                analysis: "设置路径：新华尊小程序-我的-权益使用人信息-添加。"
+            },
+            {
+                question: "关于新华尊权益使用，以下说法正确的是？",
+                options: ["仅投保人可用", "仅共享人可用", "投保人与共享人均可使用，按次数分配", "投保人与共享人各有独立次数"],
+                answer: 2,
+                analysis: "新华尊投保人及两位权益共享人均可使用所属权益，但需按次数分配，单次权益仅1人可用。"
+            },
+            {
+                question: "投保人变更后，新投保人当年会因保费变高而实时升级吗？",
+                options: ["会，实时升级", "不会，当年权益已分配原投保人", "次月升级", "次年中期升级"],
+                answer: 1,
+                analysis: "不会，当年权益已分配原投保人。新投保人会在次年1月1日定级时享受等级变化。"
+            },
+            {
+                question: "新华尊客户加保达到标准后，等级如何变化？",
+                options: ["实时升级", "次月升级", "次年1月1日升级", "不升级"],
+                answer: 0,
+                analysis: "针对已经定级的尊客户，加保生效后达到标准的客户实时升级。"
+            },
+            {
+                question: "新华尊客户减保后，等级何时重新判定？",
+                options: ["立即降级", "次月降级", "次年1月1日", "不减级"],
+                answer: 2,
+                analysis: "减保后次年1月1日根据新华尊等级核定标准判断是维持原等级或是降级。"
             },
             {
                 question: "新华尊视频医生服务的平均接通时间约为？",
@@ -476,65 +906,349 @@
                 analysis: "新华尊视频医生9秒即可接通线上医生，提供7×24小时在线问诊服务。"
             },
             {
-                question: "新华瑞星级客户认定中，10年以上保单的折算系数为？",
-                options: ["0.1", "0.5", "1", "X/10"],
-                answer: 2,
-                analysis: "新华瑞星级客户保费折算规则：10年以上保单折算系数1，1-10年保单折算系数X/10，趸交保单折算系数0.1。"
+                question: "新华尊各类权益项目的有效期是？",
+                options: ["激活后365天", "自然年度内有效", "保单有效期内", "终身有效"],
+                answer: 1,
+                analysis: "各类权益项目使用在自然年度内有效。"
             },
             {
+                question: "新华尊健康体检服务每年提供几次免费体检？",
+                options: ["1次", "2次", "3次", "不限次"],
+                answer: 0,
+                analysis: "公司每年提供1次免费健康体检服务。"
+            },
+            {
+                question: "新华尊就医协助服务不包含以下哪项？",
+                options: ["三甲医院副主任医师以上挂号服务", "诊前建议与科室推荐", "全程陪诊（半日内）", "减免医疗费用"],
+                answer: 3,
+                analysis: "就医协助包含挂号、诊前建议、陪诊三项服务，医疗费用客户自理。"
+            },
+            {
+                question: "新华尊速通服务主要解决什么需求？",
+                options: ["线上问诊加急", "检查、住院、手术预约加急", "保费缴纳加急", "理赔审核加急"],
+                answer: 1,
+                analysis: "速通服务提供三甲医院检查、住院、手术的预约加急和协调服务。"
+            },
+            {
+                question: "新华尊财税法商服务不支持以下哪类咨询？",
+                options: ["民事咨询", "商事咨询", "行政、刑事咨询", "财富传承咨询"],
+                answer: 2,
+                analysis: "财税法商服务支持民事、商事咨询，不支持行政、刑事方面。"
+            },
+
+            // ===== 新华瑞模块 =====
+            {
+                question: "新华瑞星级客户认定的依据是？",
+                options: ["累计实交保费", "累计年度折算保费", "保单现金价值", "当年应交保费"],
+                answer: 1,
+                analysis: "新华瑞星级客户按投保人非终止长险保单累计年度折算保费认定。"
+            },
+            {
+                question: "新华瑞保费折算中，趸交保单的折算系数是？",
+                options: ["0.1", "0.5", "1", "X/10"],
+                answer: 0,
+                analysis: "趸交保单折算系数0.1，10年以上保单折算系数1，1-10年保单折算系数X/10。"
+            },
+            {
+                question: "新华瑞保费折算中，10年以上保单的折算系数为？",
+                options: ["0.1", "0.5", "1", "1.5"],
+                answer: 2,
+                analysis: "10年以上保单折算系数为1。"
+            },
+            {
+                question: "追加保费能促进新华瑞等级升级吗？",
+                options: ["能", "不能", "部分产品能", "达到阈值后能"],
+                answer: 1,
+                analysis: "不能，新华瑞的保费定级是首年期交保费按年限折算，追加保费不计入核算。"
+            },
+            {
+                question: "新华瑞客户减保后，核算标准会降低吗？",
+                options: ["会", "不会", "减半", "按比例降低"],
+                answer: 1,
+                analysis: "新华瑞减保不降低核算标准。"
+            },
+            {
+                question: "基础规则下，新华瑞客户能增加权益共享人吗？",
+                options: ["能，2人", "能，1人", "不能，仅本人使用", "能，不限人数"],
+                answer: 2,
+                analysis: "基础规则下新华瑞客户不能增加共享人，只能投保人本人使用（三季度四星五星客户除外）。"
+            },
+            {
+                question: "新华瑞更换投保人后，新投保人何时获得相应权益？",
+                options: ["变更当日", "变更后T+3", "次年1月15日重新定级后", "立即获得"],
+                answer: 2,
+                analysis: "更换投保人后，次年1月15日重新定级后新投保人获得相应权益。"
+            },
+            {
+                question: "新华瑞客户升级规则是？",
+                options: ["实时升级，年度内只升不降", "月度升级", "年度统一调整", "季度调整"],
+                answer: 0,
+                analysis: "新华瑞客户在体系内实时升级，年度内只升不降。"
+            },
+            {
+                question: "新华瑞保单退保终止后，当年权益如何处理？",
+                options: ["立即失效", "当年权益可正常享受，次年降级", "保留一半次数", "终身有效"],
+                answer: 1,
+                analysis: "若保单退保等原因导致终止，当年度权益已下发则当年可正常享受，次年降级或不可享受。"
+            },
+
+            // ===== 康养资格函模块 =====
+            {
+                question: "关于康养资格函行权，以下说法正确的是？",
+                options: ["保证入住权可同时行使多次", "优先入住权可同时进行多次", "保证入住权和优先入住权都只能一次", "两者都不能同时行权"],
+                answer: 0,
+                analysis: "保证入住权可以同时行使，同时仅可以有一次正在进行的优先入住权行权。"
+            },
+            {
+                question: "康养社区入住原则上要求达到什么年龄？",
+                options: ["50岁", "55岁", "法定退休年龄", "65岁"],
+                answer: 2,
+                analysis: "原则上达到法定退休年龄即可入住，具体以拟入住社区要求为准。"
+            },
+            {
+                question: "非资格函客户是否可以入住对接康养社区？",
+                options: ["不可以", "可以，且享受同等权益", "可以，但不享受资格函专属权益", "仅体验入住可以"],
+                answer: 2,
+                analysis: "非资格函客户可以入住，但不享受保证入住、优先入住、优惠入住权益。"
+            },
+            {
+                question: "单个保险产品可以挂钩几份资格函？",
+                options: ["1份", "2份", "3份", "不限"],
+                answer: 0,
+                analysis: "单个保单的单一保险产品只能挂钩一份资格函。"
+            },
+            {
+                question: "2023版与2025版资格函是否可同时持有？",
+                options: ["不可以", "可以，且均可持有多份23版", "可以，但仅能同时持有1份有效的23版", "未明确规定"],
+                answer: 2,
+                analysis: "客户可同时持有两版资格函，亦可持有多份2025版，但仅能同时持有1份有效的2023版。"
+            },
+            {
+                question: "资格函的保费计算以什么为单位？",
+                options: ["被保险人", "投保人", "保单号", "受益人"],
+                answer: 1,
+                analysis: "资格函的保费计算均以单一投保人为单位，与被保险人无关。"
+            },
+            {
+                question: "停售产品的既往保单是否计入资格函累计保费？",
+                options: ["不计入", "满足规定的仍可计入", "减半计入", "仅计入一半"],
+                answer: 1,
+                analysis: "停售产品既往保单满足签署时业务方案规定的，仍可计入累计应交保费计算。"
+            },
+            {
+                question: "入住权益全部使用完毕后，资格函会失效吗？",
+                options: ["完全失效", "不会失效，仍享受其他相关权益", "暂停效力", "自动续期"],
+                answer: 1,
+                analysis: "入住权益使用完毕后，无法再提交入住申请，但仍可享受资格函客户的其他相关权益。"
+            },
+            {
+                question: "投保人变更后，新投保人的资格函权益如何处理？",
+                options: ["承接原投保人剩余权益", "重新签署资格函，享受全部权益", "没有资格函权益", "保留一半权益"],
+                answer: 1,
+                analysis: "投保人变更后，原资格函失效，新投保人可重新签署资格函，享受全部权益。"
+            },
+            {
+                question: "投保人身故后，第二投保人能否自动承接资格函权益？",
+                options: ["能，自动承接", "不能，资格函失效，需重新签约", "继承一半权益", "保留一年"],
+                answer: 1,
+                analysis: "资格函不会自动转移至第二投保人，持有人身故资格函失效，第二投保人达标可重新签约。"
+            },
+            {
+                question: "减保后资格函是否有效，判断依据是？",
+                options: ["现金价值", "累计应交保费", "已交保费", "保单账户价值"],
+                answer: 1,
+                analysis: "如累计应交保费仍达标，资格函仍有效，依据是累计应交保费，非现金价值。"
+            },
+            {
+                question: "客户自助查询资格函达标情况的路径是？",
+                options: ["新华家园小程序", "新华尊小程序", "新时代App", "官微保单服务"],
+                answer: 0,
+                analysis: "客户查询路径：新华家园小程序（签署资格函或个人中心）。"
+            },
+            {
+                question: "代理人查询客户资格函情况的路径是？",
+                options: ["新华家园小程序", "新时代App康养专区", "新华尊小程序", "内勤系统"],
+                answer: 1,
+                analysis: "队伍查询路径：新时代App康养专区。"
+            },
+            {
+                question: "投保人变更后，资格函信息同步到小程序需要多久？",
+                options: ["实时同步", "2天左右", "一周", "次月"],
+                answer: 1,
+                analysis: "有时间差，2天左右同步到新华家园小程序。"
+            },
+            {
+                question: "趸交保费是否符合资格函保费标准？",
+                options: ["不符合", "符合，与交费期无关", "部分产品符合", "打8折计入"],
+                answer: 1,
+                analysis: "趸交保费也可以计算，只要产品在清单内、应交保费达标即可，与交费期无关。"
+            },
+            {
+                question: "保费豁免后，对资格函权益有影响吗？",
+                options: ["资格函失效", "累计保费视同有效，不影响", "减半计入", "暂停效力"],
+                answer: 1,
+                analysis: "理赔终止、满期终止，累计保费计算视同保费有效，不影响资格函权益。"
+            },
+            {
+                question: "签错了资格函版本，目前可以改签吗？",
+                options: ["可以立即改签", "目前无法改签，等后续重置功能", "补差价即可改签", "注销重签"],
+                answer: 1,
+                analysis: "目前无法改签，等后续公司发布重置资格函功能后可以重新签署。"
+            },
+            {
+                question: "保单失效后，资格函效力如何？",
+                options: ["不受影响", "累计保费低于标准则效力中止", "直接永久失效", "自动复效"],
+                answer: 1,
+                analysis: "失效后如累计保费低于签约标准，则资格函效力中止，无法行权，复效后需重新签署。"
+            },
+            {
+                question: "保单做保险金信托后，能否享受生态权益？",
+                options: ["能", "不能，投保人变为信托公司无法识别", "保留一半", "视信托规模而定"],
+                answer: 1,
+                analysis: "做信托后投保人变成信托公司，系统无法识别保单在客户个人名下，因此不能享受。"
+            },
+            {
+                question: "2025版资格函要求单个产品累计应交保费达到多少？",
+                options: ["5万元", "10万元", "30万元", "100万元"],
+                answer: 1,
+                analysis: "2025版单个产品累计应交保费达到10万元，投保人名下合计100万元可获得签署资格。"
+            },
+            {
+                question: "2023版资格函正式停止签署的时间是？",
+                options: ["2026年7月30日", "2026年10月30日", "2026年12月31日", "2027年1月1日"],
+                answer: 1,
+                analysis: "总公司定于2026年10月30日，正式停止签署2023新华家园版康养资格函。"
+            },
+
+            // ===== 蜀新伴模块 =====
+            {
                 question: "关于蜀新伴权益共享，以下说法正确的是？",
-                options: ["所有服务均可共享", "三甲门诊就医预约仅投保人及被保人可用", "所有服务均不可共享", "仅体检服务可共享"],
+                options: ["所有服务均可共享", "三甲门诊就医预约仅投保人及被保人可用", "所有服务均不可共享", "仅体检可共享"],
                 answer: 1,
                 analysis: "蜀新伴权益除三甲门诊就医预约仅投保人及被保人可用外，其他服务均可共享。"
             },
             {
-                question: "2025版康养资格函要求单个保险产品累计应交保费达到多少？",
-                options: ["5万元", "10万元", "30万元", "100万元"],
+                question: "蜀新伴权益共享怎么操作？",
+                options: ["小程序添加共享人", "下单页面备注使用人信息", "致电客服", "代理人操作"],
                 answer: 1,
-                analysis: "2025版资格函规则：单个产品累计应交保费达到10万元，投保人名下合计达到100万元即可获得签署资格。"
+                analysis: "客户在下单页面下方备注使用人信息即可。"
             },
             {
-                question: "三季度政策中，新华瑞四、五星客户最多可设置几名权益共享人？",
+                question: "尊瑞小程序等级和蜀新伴显示不一致的原因不包括？",
+                options: ["蜀新伴数据每月人工导数", "保单权益归属地不在四川", "客户未实名认证", "加保在导数时点后"],
+                answer: 2,
+                analysis: "不一致原因：一是数据每月人工导，加保在时点后次月体现；二是保单归属地不在四川。"
+            },
+            {
+                question: "蜀新伴服务下单后可以取消吗？",
+                options: ["随时可以取消", "不可以", "24小时内可取消", "未使用可取消"],
+                answer: 1,
+                analysis: "不可以。下单后系统自动生成订单，发送至对应供应商服务。"
+            },
+            {
+                question: "蜀新伴微信号绑定错误如何修改？",
+                options: ["自行解绑", "报送后台取消绑定", "无法修改", "重新注册"],
+                answer: 1,
+                analysis: "提供错误的微信号及手机号，报送后台取消绑定。"
+            },
+
+            // ===== 三季度政策模块 =====
+            {
+                question: "三季度权益共享人政策覆盖哪些客户？",
+                options: ["所有新华瑞客户", "新华瑞四星、五星客户", "所有新华尊客户", "全部客户"],
+                answer: 1,
+                analysis: "三季度权益共享人政策覆盖新华瑞四星、五星客户。"
+            },
+            {
+                question: "三季度新华瑞四、五星客户最多可设置几名权益共享人？",
                 options: ["1名", "2名", "3名", "5名"],
                 answer: 1,
-                analysis: "每位客户最多在系统中新增2名权益共享人员，自然年内不可更改。"
+                analysis: "每位客户最多新增2名权益共享人员，自然年内不可更改。"
             },
             {
-                question: "三季度健康体检升级套餐中，新增的检测项目不包括以下哪项？",
+                question: "三季度权益共享人设置后，当年可以修改吗？",
+                options: ["可以随时修改", "不可修改", "可修改一次", "每月可修改一次"],
+                answer: 1,
+                analysis: "不可修改权益共享人，自然年内不可更改。"
+            },
+            {
+                question: "设置权益共享人后，权益总次数会增加吗？",
+                options: ["会，共享人额外增加次数", "不会，总次数不变", "增加一半", "视星级而定"],
+                answer: 1,
+                analysis: "权益总次数不变，本人或共享人使用均扣减对应权益次数。"
+            },
+            {
+                question: "以下哪项服务可以使用三季度权益共享人政策？",
+                options: ["成人洁牙服务", "健康体检", "都可以", "都不可以"],
+                answer: 1,
+                analysis: "成人洁牙为阶段性权益，不在共享范围内；健康体检属于11项可共享服务之一。"
+            },
+            {
+                question: "三季度健康体检升级新增项目不包括？",
                 options: ["幽门螺旋杆菌", "同型半胱氨酸", "HPV16/18定性（女性）", "肿瘤标志物全套"],
                 answer: 3,
-                analysis: "体检升级新增幽门螺旋杆菌、同型半胱氨酸及人类乳头瘤（HPV16/18）定性（女性）等检测。"
+                analysis: "体检升级新增幽门螺旋杆菌、同型半胱氨酸及HPV16/18定性（女性）检测。"
+            },
+            {
+                question: "成都地区三季度新增的体检供应商是？",
+                options: ["爱康国宾", "新华健康", "美年大健康", "瑞慈体检"],
+                answer: 1,
+                analysis: "除原合作供应商外，成都计划新增新华健康为体检供应商。"
+            },
+            {
+                question: "三季度新华瑞一星客户视频医生升级为？",
+                options: ["单人版天卡", "单人版季卡", "家庭版年卡", "单人版年卡"],
+                answer: 1,
+                analysis: "新华瑞一星客户从原单人版天卡升级为单人版季卡。"
+            },
+            {
+                question: "视频医生服务激活后可以返还权益吗？",
+                options: ["可以", "不支持返还", "7天内可返还", "未使用可返还"],
+                answer: 1,
+                analysis: "视频医生服务激活后，不支持返还权益。"
             },
             {
                 question: "成人洁牙服务的领取有效期截止到？",
                 options: ["2026年6月30日", "2026年9月30日", "2026年12月31日", "2027年1月1日"],
                 answer: 1,
-                analysis: "成人洁牙服务领取有效期截至2026年9月30日晚24:00，下单有效期截至2026年12月31日。"
+                analysis: "成人洁牙服务领取有效期截至2026年9月30日晚24:00。"
             },
             {
-                question: "26版新华尊客户权益共享人可设置几人？",
-                options: ["1人，当年不可更改", "2人，当年不可更改", "2人，可随时更改", "3人，当年不可更改"],
+                question: "成人洁牙服务下单有效期截止到？",
+                options: ["2026年9月30日", "2026年12月31日", "2027年1月1日", "领取后30天"],
                 answer: 1,
-                analysis: "26版新华尊权益共享人可设置两人，一经确认，当年不可更改。"
+                analysis: "服务下单有效期截至2026年12月31日晚24:00。"
             },
             {
-                question: "2023新华家园版康养资格函正式停止签署的时间是？",
-                options: ["2026年7月30日", "2026年10月30日", "2026年12月31日", "2027年1月1日"],
+                question: "成人洁牙服务需要提前多久预约？",
+                options: ["1个工作日", "3个自然日", "5个自然日", "一周"],
+                answer: 2,
+                analysis: "洁牙前须至少提前5个自然日进行预约。"
+            },
+            {
+                question: "成人洁牙服务适用的客户群体是？",
+                options: ["所有客户", "新华瑞2-5星活跃客户", "新华尊客户", "仅黑钻客户"],
                 answer: 1,
-                analysis: "总公司定于2026年10月30日，正式停止签署\"2023新华家园版\"康养资格函。"
+                analysis: "成人洁牙服务面向新华瑞2-5星的活跃客户。"
+            },
+            {
+                question: "什么状态的洁牙订单，客户可自行取消并返还权益？",
+                options: ["待受理", "已预约", "已完成", "所有状态"],
+                answer: 0,
+                analysis: "订单状态为待受理时，客户可自行取消订单，权益自动返还。"
             }
         ];
 
+        // ==================== 答题核心逻辑 ====================
         let currentQuestions = [];
         let currentIndex = 0;
         let score = 0;
         let correctCount = 0;
         let wrongList = [];
         let timer = null;
-        let timeLeft = 15;
+        let timeLeft = 30;
         let startTime = 0;
 
-        // 随机抽取题目
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {
@@ -544,7 +1258,13 @@
             return newArray;
         }
 
-        // 开始答题
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
         function startQuiz() {
             currentQuestions = shuffleArray(questionBank).slice(0, 10);
             currentIndex = 0;
@@ -557,15 +1277,6 @@
             renderQuestion();
         }
 
-        // 切换页面
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        // 渲染题目
         function renderQuestion() {
             const q = currentQuestions[currentIndex];
             document.getElementById('questionIndex').textContent = `第 ${currentIndex + 1} / 10 题`;
@@ -581,8 +1292,7 @@
             
             document.getElementById('feedbackBox').classList.remove('show');
             
-            // 启动倒计时
-            timeLeft = 15;
+            timeLeft = 30;
             updateTimer();
             clearInterval(timer);
             timer = setInterval(() => {
@@ -597,14 +1307,8 @@
 
         function updateTimer() {
             document.getElementById('timer').textContent = timeLeft + 's';
-            if (timeLeft <= 5) {
-                document.getElementById('timer').style.color = '#FF4D4F';
-            } else {
-                document.getElementById('timer').style.color = '#FF4D4F';
-            }
         }
 
-        // 选择选项
         function selectOption(idx) {
             clearInterval(timer);
             const q = currentQuestions[currentIndex];
@@ -626,17 +1330,14 @@
                 });
             }
             
-            // 显示解析
             document.getElementById('feedbackContent').textContent = q.analysis;
             document.getElementById('feedbackBox').classList.add('show');
             
-            // 1.5秒后下一题
             setTimeout(() => {
                 nextQuestion();
             }, 1500);
         }
 
-        // 超时处理
         function timeUp() {
             const q = currentQuestions[currentIndex];
             const options = document.querySelectorAll('.option-item');
@@ -657,17 +1358,32 @@
             }, 1500);
         }
 
-        // 下一题
         function nextQuestion() {
             currentIndex++;
             if (currentIndex >= 10) {
+                saveScore();
                 showResult();
             } else {
                 renderQuestion();
             }
         }
 
-        // 显示结果
+        function saveScore() {
+            const phone = localStorage.getItem('currentUser');
+            if (!phone) return;
+
+            const userList = JSON.parse(localStorage.getItem('userList') || '{}');
+            const user = userList[phone];
+            
+            if (user) {
+                user.totalScore += score;
+                if (score > user.bestScore) user.bestScore = score;
+                user.passCount += 1;
+                userList[phone] = user;
+                localStorage.setItem('userList', JSON.stringify(userList));
+            }
+        }
+
         function showResult() {
             const usedTime = Math.floor((Date.now() - startTime) / 1000);
             
@@ -692,6 +1408,7 @@
 
         function goHome() {
             showPage('home-page');
+            updateUserInfo();
         }
     </script>
 </body>
